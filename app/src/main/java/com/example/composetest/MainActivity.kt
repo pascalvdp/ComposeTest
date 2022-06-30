@@ -9,6 +9,7 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -20,10 +21,12 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.composetest.ui.theme.ComposeTestTheme
 
 class MainActivity : ComponentActivity() {
@@ -33,6 +36,9 @@ class MainActivity : ComponentActivity() {
             ComposeTestTheme {
             //BasicsCodelabTheme {
                 MyApp()
+                /*LazyColumnClickableDemo{
+                        Toast.makeText(this, "Person $it", Toast.LENGTH_SHORT ).show()
+                    }*/
             }
         }
     }
@@ -135,7 +141,21 @@ private fun CardContent(name: String) {
     }
 }
 
-
+@Composable
+fun LazyColumnClickableDemo(selectedPerson: (Int)->Unit) {
+    LazyColumn{
+        items(200) {
+            Surface(modifier = Modifier.clickable { selectedPerson(it+1) }) {
+                Text(
+                    text = "Person ${it+1}",
+                    fontSize = 36.sp,
+                    modifier = Modifier.padding(8.dp)
+                )
+                Divider(color = Color.Gray, thickness = 1.dp)
+            }
+        }
+    }
+}
 
 //@Preview(showBackground = true, widthDp = 320, heightDp = 320, uiMode = UI_MODE_NIGHT_YES)
 @Preview(showBackground = true, widthDp = 320, heightDp = 320)
